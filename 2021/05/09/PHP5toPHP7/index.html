@@ -18,7 +18,7 @@
   <meta name="author" content="John Doe">
   <meta name="keywords" content="">
   
-  <title>我的小姐姐，好可爱 - FlyPig</title>
+  <title>升级PHP7后废弃的几个函数 - FlyPig</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
 
@@ -127,7 +127,7 @@
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="我的小姐姐，好可爱">
+            <span class="h2" id="subtitle" title="升级PHP7后废弃的几个函数">
               
             </span>
 
@@ -137,8 +137,8 @@
   
     <span class="post-meta">
       <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-      <time datetime="2018-11-05 13:45" pubdate>
-        2018年11月5日 下午
+      <time datetime="2021-05-09 18:41" pubdate>
+        2021年5月9日 晚上
       </time>
     </span>
   
@@ -149,7 +149,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      90 字
+      410 字
     </span>
   
 
@@ -159,7 +159,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      1
+      6
        分钟
     </span>
   
@@ -197,14 +197,87 @@
         <div class="py-5" id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">我的小姐姐，好可爱</h1>
+            <h1 style="display: none">升级PHP7后废弃的几个函数</h1>
             
             <div class="markdown-body">
-              <p>本周打分应该可以给六十分，心情一直在一个低水平内浮动，代入感太强以及其它问题很多。   </p>
-<p>但是这次回家，见到朋友，再一次又获得了力量。一想到有这些可爱的人陪伴着我，就什么也不再害怕了。   </p>
-<p>要可爱啊！嘻嘻。</p>
-<blockquote>
-<p>引用自<a target="_blank" rel="noopener" href="http://shiyote.com/">SHIYOTE</a></p>
+              <h2 id="PHP5升级PHP7"><a href="#PHP5升级PHP7" class="headerlink" title="PHP5升级PHP7"></a>PHP5升级PHP7</h2><p>网上找到一个2010年的demo学习，我的环境是PHP7，发现有几个函数已经弃用。这里记录下，以免忘记。   </p>
+<h2 id="mysql-connect-改为mysqli-connect"><a href="#mysql-connect-改为mysqli-connect" class="headerlink" title="mysql_connect 改为mysqli_connect"></a>mysql_connect 改为mysqli_connect</h2><blockquote>
+<p>数据库链接函数，直接改为mysqli_connect，参数不变。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-comment">//php5.5之前</span><br><span class="hljs-keyword">$this</span>-&gt;link = mysql_connect(<span class="hljs-keyword">$this</span>-&gt;server, <span class="hljs-keyword">$this</span>-&gt;user, <span class="hljs-keyword">$this</span>-&gt;password) <span class="hljs-keyword">or</span> <span class="hljs-keyword">die</span>(<span class="hljs-keyword">$this</span>-&gt;error(<span class="hljs-string">&quot;数据库服务器连接出错!&quot;</span>));<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-comment">//php5.5之后</span><br><span class="hljs-keyword">$this</span>-&gt;link = mysqli_connect(<span class="hljs-keyword">$this</span>-&gt;server, <span class="hljs-keyword">$this</span>-&gt;user, <span class="hljs-keyword">$this</span>-&gt;password) <span class="hljs-keyword">or</span> <span class="hljs-keyword">die</span>(<span class="hljs-keyword">$this</span>-&gt;error(<span class="hljs-string">&quot;数据库服务器连接出错!&quot;</span>));<br></code></pre></td></tr></table></figure>
+</blockquote>
+<h2 id="mysql-select-db改为mysqli-select-db"><a href="#mysql-select-db改为mysqli-select-db" class="headerlink" title="mysql_select_db改为mysqli_select_db"></a>mysql_select_db改为mysqli_select_db</h2><blockquote>
+<p> 数据库选择函数，将mysql_selext_db改为mysqli_select_db，将$database和$link参数调换位置。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs php">mysql_select_db(<span class="hljs-keyword">$this</span>-&gt;database, <span class="hljs-keyword">$this</span>-&gt;link) <span class="hljs-keyword">or</span> <span class="hljs-keyword">die</span>(<span class="hljs-keyword">$this</span>-&gt;error(<span class="hljs-string">&quot;数据库连接出错!&quot;</span>));<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs php">mysqli_select_db(<span class="hljs-keyword">$this</span>-&gt;link,<span class="hljs-keyword">$this</span>-&gt;database) <span class="hljs-keyword">or</span> <span class="hljs-keyword">die</span>(<span class="hljs-keyword">$this</span>-&gt;error(<span class="hljs-string">&quot;数据库连接出错!&quot;</span>));<br></code></pre></td></tr></table></figure>
+</blockquote>
+<h2 id="mysql-query改为mysqli-query"><a href="#mysql-query改为mysqli-query" class="headerlink" title="mysql_query改为mysqli_query"></a>mysql_query改为mysqli_query</h2><blockquote>
+<p>数据库查询函数，将mysql_query的两个参数交换位置即为mysqli_query的参数。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs php">&gt;<span class="hljs-variable">$result</span> = mysql_query(<span class="hljs-variable">$sql</span>, <span class="hljs-keyword">$this</span>-&gt;link);<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs php">&gt;<span class="hljs-variable">$result</span> = mysqli_query(<span class="hljs-keyword">$this</span>-&gt;link,<span class="hljs-variable">$sql</span>);<br></code></pre></td></tr></table></figure>
+</blockquote>
+<p>类似的还有很多，都是将mysql改为mysqli。    </p>
+<h2 id="MySQL语句中不同类型变量的处理"><a href="#MySQL语句中不同类型变量的处理" class="headerlink" title="MySQL语句中不同类型变量的处理"></a>MySQL语句中不同类型变量的处理</h2><blockquote>
+<ul>
+<li> 数据库guestbook表如下</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>名</th>
+<th>类型</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>id</td>
+<td>int</td>
+</tr>
+<tr>
+<td>user</td>
+<td>varchar</td>
+</tr>
+<tr>
+<td>text</td>
+<td>text</td>
+</tr>
+<tr>
+<td>email</td>
+<td>varchar</td>
+</tr>
+<tr>
+<td>qq</td>
+<td>int</td>
+</tr>
+<tr>
+<td>settop</td>
+<td>tinyint</td>
+</tr>
+<tr>
+<td>setqqh</td>
+<td>tinyint</td>
+</tr>
+<tr>
+<td>ip</td>
+<td>varchar</td>
+</tr>
+<tr>
+<td>time</td>
+<td>datetime</td>
+</tr>
+</tbody></table>
+<ul>
+<li>PHP较老的版本SQL语句中的变量加引号即可</li>
+</ul>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs php">&gt;<span class="hljs-variable">$user</span>=<span class="hljs-variable">$_POST</span>[<span class="hljs-string">&#x27;user&#x27;</span>];<br><span class="hljs-variable">$text</span>=checkhtml(<span class="hljs-variable">$_POST</span>[<span class="hljs-string">&#x27;text&#x27;</span>]);<br><span class="hljs-variable">$email</span>=<span class="hljs-variable">$_POST</span>[<span class="hljs-string">&#x27;email&#x27;</span>];<br><span class="hljs-variable">$qq</span>=<span class="hljs-variable">$_POST</span>[<span class="hljs-string">&#x27;qq&#x27;</span>];<br><span class="hljs-variable">$setqqh</span>=<span class="hljs-variable">$_POST</span>[<span class="hljs-string">&#x27;setqqh&#x27;</span>];<br><span class="hljs-variable">$dtime</span>=date(<span class="hljs-string">&quot;Y-m-d H:i:s&quot;</span>);<br><span class="hljs-variable">$ip</span>=<span class="hljs-variable">$_SERVER</span>[<span class="hljs-string">&quot;REMOTE_ADDR&quot;</span>];<br><span class="hljs-variable">$add_ob</span>=<span class="hljs-keyword">new</span> mysql(WEB_SERVER,WEB_USER,WEB_PWD,WEB_DB,<span class="hljs-string">&quot;utf8&quot;</span>);<br><span class="hljs-variable">$sql</span> = <span class="hljs-string">&quot;insert into guestbook(user,email,text,ip,setqqh,time) values(&#x27;<span class="hljs-subst">$user</span>&#x27;,&#x27;<span class="hljs-subst">$email</span>&#x27;,&#x27;<span class="hljs-subst">$text</span>&#x27;,&#x27;<span class="hljs-subst">$ip</span>&#x27;,&#x27;<span class="hljs-subst">$setqqh</span>&#x27;,&#x27;<span class="hljs-subst">$dtime</span>&#x27;)&quot;</span>;<br><span class="hljs-variable">$result</span> = <span class="hljs-variable">$add_ob</span>-&gt;query(<span class="hljs-variable">$sql</span>);<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>PHP新版本SQL语句中变量必须加{}</li>
+</ul>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs php"><br></code></pre></td></tr></table></figure>
+
 </blockquote>
 
             </div>
@@ -226,9 +299,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2021/05/09/PHP5toPHP7/">
+                      <a href="/2021/07/27/MySweet/">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">升级PHP7后废弃的几个函数</span>
+                        <span class="hidden-mobile"></span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -236,8 +309,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2018/10/28/zhen6/">
-                        <span class="hidden-mobile">珍6</span>
+                      <a href="/2018/11/05/sister/">
+                        <span class="hidden-mobile">我的小姐姐，好可爱</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

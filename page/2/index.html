@@ -18,7 +18,7 @@
   <meta name="author" content="John Doe">
   <meta name="keywords" content="">
   
-  <title>归档 - FlyPig</title>
+  <title>FlyPig</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
 
@@ -48,7 +48,7 @@
 
 
 <body>
-  <header style="height: 60vh;">
+  <header style="height: 100vh;">
     <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
   <div class="container">
     <a class="navbar-brand"
@@ -111,13 +111,17 @@
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="归档">
+            <span class="h2" id="subtitle" title="">
               
             </span>
 
             
           </div>
 
+          
+            <div class="scroll-down-bar">
+              <i class="iconfont icon-arrowdown"></i>
+            </div>
           
         </div>
       </div>
@@ -128,30 +132,58 @@
     
       <div class="container nopadding-x-md">
         <div class="py-5" id="board"
-          >
+          style=margin-top:0>
           
           <div class="container">
             <div class="row">
               <div class="col-12 col-md-10 m-auto">
                 
 
-<div class="list-group">
-  <p class="h4">共计 11 篇文章</p>
-  <hr>
-  
-  
+
+  <div class="row mx-auto index-card">
     
-      
-      <p class="h5">2017</p>
     
-    <a href="/2017/10/14/AboutTheBlog/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">关于独立博客，越来越小众了吗？</span>
-      <time style="float: right;">10-14</time>
-    </a>
-  
-</div>
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2017/10/14/AboutTheBlog/" target="_self">
+          关于独立博客，越来越小众了吗？
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2017/10/14/AboutTheBlog/" target="_self">
+          
+          
+            
+          
+          关于独立博客博客好久没更新了，也许是老了吧？没年轻的时候那么多热情了。翻看了刚玩博客那会的好友，好多网站都已经挂了。要不就是跟我这样，最新博文还停留在几年前的。看样子差不都都是上班两三年后停更的，老婆孩子热炕头，天天上班还房贷累成狗，也是没上学那会的精力了。   
+关于独立博客，其实很难界定。维基百科定义：独立博客一般指在采用独立域名和网络主机的博客。其实也就是网站，这样算来，互联网伊始，满世界都
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2017-10-14 14:07" pubdate>
+              2017-10-14
+            </time>
+          </div>
+        
+        
+        
+      </div>
+    </article>
+  </div>
 
 
+
+  <nav aria-label="navigation">
+    <span class="pagination" id="pagination">
+      <a class="extend prev" rel="prev" href="/"><i class="iconfont icon-arrowleft"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
+    </span>
+  </nav>
 
 
 
@@ -260,7 +292,34 @@
       var typing = Fluid.plugins.typing;
       var title = document.getElementById('subtitle').title;
       
-      typing(title)
+      $.ajax({
+        type: 'GET',
+        url: 'https://v1.hitokoto.cn/',
+        headers: {},
+        dataType: 'json',
+        success: function (result) {
+          var text;
+          if (result) {
+            var keys = 'hitokoto'.split('.')
+            if (result instanceof Array) {
+              result = result[0]
+            }
+            for (const k of keys) {
+              var value = result[k]
+              if (typeof value === 'string') {
+                text = value
+                break
+              } else if (value instanceof Object) {
+                result = value
+              }
+            }
+          }
+          text ? typing(text) : typing(title);
+        },
+        error: function () {
+          typing(title)
+        }
+      })
       
     })(window, document);
   </script>
